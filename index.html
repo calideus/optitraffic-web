@@ -1,62 +1,814 @@
-
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Opti Traffic | Optimización del tráfico urbano</title>
-    <link rel="stylesheet" href="style.css">
+
+    <meta
+        name="description"
+        content="Opti Traffic ofrece soluciones de optimización del flujo de tráfico urbano mediante algoritmos de cálculo de ciclos semafóricos."
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --dark: #10233f;
+            --dark-soft: #183554;
+            --accent: #18b6a4;
+            --accent-dark: #109789;
+            --light: #f5f8fb;
+            --white: #ffffff;
+            --text: #243447;
+            --muted: #66788a;
+            --border: #e4ebf1;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text);
+            background: var(--white);
+            line-height: 1.6;
+        }
+
+        /* -------------------------
+           NAVBAR
+        ------------------------- */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(228, 235, 241, 0.8);
+        }
+
+        .nav {
+            max-width: 1150px;
+            margin: auto;
+            padding: 18px 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            color: var(--dark);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav a {
+            margin-left: 28px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--accent-dark);
+        }
+
+        /* -------------------------
+           HERO
+        ------------------------- */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(24, 182, 164, 0.18),
+                    transparent 32%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--dark),
+                    var(--dark-soft)
+                );
+
+            color: var(--white);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            right: -150px;
+            bottom: -250px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 1150px;
+            margin: auto;
+            padding: 120px 28px 130px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 22px;
+
+            color: #74e0d2;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            max-width: 800px;
+
+            font-size: clamp(2.7rem, 6vw, 5rem);
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+
+            margin-bottom: 28px;
+        }
+
+        .hero h1 span {
+            color: #64d9cc;
+        }
+
+        .hero p {
+            max-width: 720px;
+
+            color: #d6e3ef;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        /* -------------------------
+           GENERAL
+        ------------------------- */
+
+        .section {
+            max-width: 1150px;
+            margin: auto;
+            padding: 100px 28px;
+        }
+
+        .section-label {
+            color: var(--accent-dark);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            max-width: 760px;
+
+            color: var(--dark);
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+
+            margin-bottom: 25px;
+        }
+
+        .section-intro {
+            max-width: 800px;
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        /* -------------------------
+           DESCRIPTION
+        ------------------------- */
+
+        .description {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .description-text p {
+            color: var(--muted);
+            font-size: 1.08rem;
+            line-height: 1.85;
+        }
+
+        .visual {
+            min-height: 340px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #edf5f7,
+                    #f8fbfc
+                );
+
+            border: 1px solid var(--border);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual::before,
+        .visual::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(24, 182, 164, 0.22);
+        }
+
+        .visual::before {
+            width: 260px;
+            height: 260px;
+        }
+
+        .visual::after {
+            width: 150px;
+            height: 150px;
+        }
+
+        .traffic-node {
+            position: relative;
+            z-index: 2;
+
+            width: 90px;
+            height: 90px;
+
+            border-radius: 50%;
+
+            background: var(--dark);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow:
+                0 0 0 12px rgba(24, 182, 164, 0.08),
+                0 0 0 30px rgba(24, 182, 164, 0.04);
+        }
+
+        .traffic-node::before {
+            content: "";
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow:
+                0 -28px 0 #d94d4d,
+                0 28px 0 #e2b84a;
+        }
+
+        /* -------------------------
+           HOW IT WORKS
+        ------------------------- */
+
+        .process {
+            background: var(--light);
+        }
+
+        .process-grid {
+            max-width: 1150px;
+            margin: auto;
+            padding: 100px 28px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .process-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 32px;
+        }
+
+        .number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: rgba(24, 182, 164, 0.1);
+            color: var(--accent-dark);
+
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .process-card h3 {
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .process-card p {
+            color: var(--muted);
+            font-size: 0.98rem;
+        }
+
+        /* -------------------------
+           BENEFITS
+        ------------------------- */
+
+        .benefits {
+            background: var(--white);
+        }
+
+        .benefit-list {
+            margin-top: 45px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .benefit {
+            padding: 30px;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .benefit:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(16, 35, 63, 0.08);
+        }
+
+        .benefit-icon {
+            width: 46px;
+            height: 46px;
+
+            border-radius: 12px;
+
+            background: rgba(24, 182, 164, 0.1);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--accent-dark);
+
+            font-size: 1.2rem;
+            font-weight: 800;
+
+            margin-bottom: 22px;
+        }
+
+        .benefit h3 {
+            color: var(--dark);
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+
+        .benefit p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* -------------------------
+           CTA
+        ------------------------- */
+
+        .cta {
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        .cta-content {
+            max-width: 1150px;
+            margin: auto;
+            padding: 90px 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .cta h2 {
+            max-width: 650px;
+
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.15;
+
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #c9d7e4;
+            max-width: 650px;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 15px 25px;
+
+            background: var(--accent);
+            color: white;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+            font-weight: 700;
+
+            white-space: nowrap;
+
+            transition: background 0.2s ease;
+        }
+
+        .button:hover {
+            background: var(--accent-dark);
+        }
+
+        /* -------------------------
+           FOOTER
+        ------------------------- */
+
+        footer {
+            background: #0b1a2e;
+            color: #8fa4b9;
+            text-align: center;
+            padding: 28px;
+            font-size: 0.85rem;
+        }
+
+        /* -------------------------
+           RESPONSIVE
+        ------------------------- */
+
+        @media (max-width: 800px) {
+
+            nav {
+                display: none;
+            }
+
+            .hero-content {
+                padding: 90px 24px 100px;
+            }
+
+            .section {
+                padding: 75px 24px;
+            }
+
+            .description {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+                padding: 75px 24px;
+            }
+
+            .benefit-list {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-content {
+                padding: 75px 24px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
     <header>
-        <h2>OPTI TRAFFIC</h2>
-        <nav>
-            <a href="#inicio">Inicio</a>
-            <a href="#servicios">Servicios</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
+        <div class="nav">
+
+            <div class="logo">
+                OPTI <span>TRAFFIC</span>
+            </div>
+
+            <nav>
+                <a href="#servicio">El servicio</a>
+                <a href="#funcionamiento">Funcionamiento</a>
+                <a href="#beneficios">Beneficios</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+
+        </div>
     </header>
 
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
     <main>
-        <section id="inicio" class="hero">
-            <h1>Optimizando la movilidad urbana</h1>
-            <p>
-                Soluciones para mejorar la
-                regulación semafórica y facilitar la gestión
-                del tráfico urbano.
-            </p>
-            <!-- <a class="boton" href="#servicios">
-                Descubre nuestra tecnología
-            </a> -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="eyebrow">
+                    Optimización del tráfico urbano
+                </span>
+
+                <h1>
+                    Una gestión del tráfico
+                    <span>más eficiente.</span>
+                </h1>
+
+                <p>
+                    Opti Traffic es un servicio de cálculo para la
+                    optimización del flujo de tráfico urbano, diseñado
+                    para integrarse con el software de gestión empleado.
+                </p>
+
+            </div>
+
         </section>
 
-        <section id="servicios">
-            <h2>Optimización semafórica</h2>
-            <p>
-                Según la demanda del tráfico y las características de las vías,
-                calculamos las configuraciones semafóricas (duraciones de fase, desfase y duración del ciclo).
-                De esta forma, Opti Traffic ofrece soluciones que mejoran el flujo del tráfico urbano,
-                sin necesidad de realizar modificaciones ni instalaciones.
 
-            </p>
-            <p>
-                Construimos el camino hacia ciudades más eficientes.
-            </p>
+        <!-- =========================
+             SERVICIO
+        ========================== -->
+
+        <section class="section" id="servicio">
+
+            <div class="description">
+
+                <div class="description-text">
+
+                    <div class="section-label">
+                        El servicio
+                    </div>
+
+                    <h2>
+                        Optimización basada en la demanda real del tráfico.
+                    </h2>
+
+                    <p>
+                        El servicio funciona bajo demanda. Según la demanda
+                        de tráfico, se aplica un algoritmo de optimización
+                        que calcula la configuración de ciclos semafóricos
+                        que maximice la fluidez de la red.
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Para ello, se tienen en cuenta tanto las capacidades
+                        de cada vía como la demanda existente en la red,
+                        buscando una configuración adaptada a las condiciones
+                        concretas de circulación.
+                    </p>
+
+                </div>
+
+
+                <div class="visual" aria-hidden="true">
+
+                    <div class="traffic-node"></div>
+
+                </div>
+
+            </div>
+
         </section>
 
-        <section id="contacto">
-            <h2>Hablemos de movilidad</h2>
-            <p>Contacta con nuestro equipo.</p>
-            <a href="mailto:info@optitraffic.es">
-                Enviar un correo
-            </a>
+
+        <!-- =========================
+             FUNCIONAMIENTO
+        ========================== -->
+
+        <section class="process" id="funcionamiento">
+
+            <div class="process-grid">
+
+                <div class="process-card">
+
+                    <div class="number">01</div>
+
+                    <h3>
+                        Demanda de tráfico
+                    </h3>
+
+                    <p>
+                        Se analiza la demanda de tráfico y las características
+                        de la red urbana objeto de estudio.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <div class="number">02</div>
+
+                    <h3>
+                        Optimización
+                    </h3>
+
+                    <p>
+                        El algoritmo calcula diferentes configuraciones
+                        semafóricas teniendo en cuenta la capacidad de las
+                        vías y la demanda de tráfico.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <div class="number">03</div>
+
+                    <h3>
+                        Resultado
+                    </h3>
+
+                    <p>
+                        Se obtiene una configuración de ciclos semafóricos
+                        orientada a maximizar la fluidez de la red.
+                    </p>
+
+                </div>
+
+            </div>
+
         </section>
+
+
+        <!-- =========================
+             BENEFICIOS
+        ========================== -->
+
+        <section class="section benefits" id="beneficios">
+
+            <div class="section-label">
+                Beneficios
+            </div>
+
+            <h2>
+                Una herramienta pensada para la gestión profesional de redes urbanas.
+            </h2>
+
+            <p class="section-intro">
+                Para empresas gestoras o consultoras de movilidad,
+                Opti Traffic aporta beneficios prácticos directamente
+                relacionados con la gestión y evaluación del tráfico urbano.
+            </p>
+
+
+            <div class="benefit-list">
+
+                <article class="benefit">
+
+                    <div class="benefit-icon">
+                        01
+                    </div>
+
+                    <h3>
+                        Gestión simplificada
+                    </h3>
+
+                    <p>
+                        Facilita la gestión de redes urbanas complejas,
+                        simplificando el análisis y ajuste de los parámetros
+                        semafóricos.
+                    </p>
+
+                </article>
+
+
+                <article class="benefit">
+
+                    <div class="benefit-icon">
+                        02
+                    </div>
+
+                    <h3>
+                        Mejora de KPIs
+                    </h3>
+
+                    <p>
+                        Orientado a mejorar indicadores de rendimiento del
+                        tráfico: aumento de la velocidad media, reducción
+                        de los tiempos de espera y reducción de emisiones
+                        de CO₂ y PMx.
+                    </p>
+
+                </article>
+
+
+                <article class="benefit">
+
+                    <div class="benefit-icon">
+                        03
+                    </div>
+
+                    <h3>
+                        Valor en licitaciones
+                    </h3>
+
+                    <p>
+                        Puede reforzar la puntuación técnica en el apartado
+                        de plan de gestión semafórica en futuras licitaciones
+                        públicas.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CONTACTO
+        ========================== -->
+
+        <section class="cta" id="contacto">
+
+            <div class="cta-content">
+
+                <div>
+
+                    <h2>
+                        Optimizar el tráfico empieza por conocer mejor la red.
+                    </h2>
+
+                    <p>
+                        Descubre cómo puede integrarse Opti Traffic
+                        en las herramientas de gestión de movilidad.
+                    </p>
+
+                </div>
+
+                <a
+                    class="button"
+                    href="mailto:jesus@optitraffic.es"
+                >
+                    Contactar
+                </a>
+
+            </div>
+
+        </section>
+
     </main>
 
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
     <footer>
-        <p>© Opti Traffic</p>
+
+        © Opti Traffic · Optimización del tráfico urbano
+
     </footer>
 
 </body>
 </html>
+```
